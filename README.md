@@ -1,2 +1,2 @@
-<h1 align="center">🎵 Tone</h1>
-<p align="center">🎶 Music bot for Discord</p>
+<h1 align="center">🤖 Jeff</h1>
+<p align="center">🤖 Multi-purpose bot for Discord</p>
