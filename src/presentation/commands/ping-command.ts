@@ -17,7 +17,6 @@ export class PingCommand implements Processor {
         try {
             await new MessageHelper(exchange.message).reply(GenericEmbed(`${this.getPingService.ping()}`))
         } catch(error: any) {
-            console.log(error)
             switch(error.message) {
                 default:
                     await new MessageHelper(exchange.message).reply(GenericError())

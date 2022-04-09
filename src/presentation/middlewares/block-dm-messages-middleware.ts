@@ -11,7 +11,6 @@ export default class BlockDmMessagesMiddleware implements Processor {
             }
             exchange.next();
         } catch (error: any) {
-            console.log(error)
             switch (error.message) {
                 default:
                     exchange.message.channel!.send("An error occurred.");

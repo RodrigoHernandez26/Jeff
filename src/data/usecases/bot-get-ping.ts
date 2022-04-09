@@ -8,7 +8,6 @@ export default class GetBotPing implements GetBotPingService {
     ) {}
 
     ping(): number {
-        console.log('aaaaa')
         return Math.round(this.getBotPing.getPing()) 
     }
 }

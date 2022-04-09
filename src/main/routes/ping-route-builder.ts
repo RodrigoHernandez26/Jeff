@@ -9,7 +9,6 @@ export class PingRouteBuilder extends RouteBuilder {
     private processor: Processor = makePingCommand();
     
     public configure(): void {
-        console.log('configure')
         this.from(this.processor.proprieties?.names!)
             .process(makeVerifyTextChannelPermissionsMiddleware())
             .process(makeBlockDmMessagesMiddleware()) 
