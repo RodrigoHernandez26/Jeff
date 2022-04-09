@@ -35,9 +35,6 @@ export default class Bot implements GetBotPingRepository {
         if (!token) throw new Error("Invalid token");
         
         this.client.login(token).then((res: string) => {
-            console.log('BOT ONLINE');
-            console.log(`Total guilds: ${this.client.guilds.cache.size}`)
-            
             if (res === this.token) { 
                 // this.addSlashCommands();
                 cb(this.client)
