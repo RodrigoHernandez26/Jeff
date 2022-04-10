@@ -11,7 +11,7 @@ export class PingRouteBuilder extends RouteBuilder {
     public configure(): void {
         this.from(this.processor.proprieties?.names!)
             .process(makeVerifyTextChannelPermissionsMiddleware())
-            .process(makeBlockDmMessagesMiddleware()) 
+            .process(makeBlockDmMessagesMiddleware())
             .process(this.processor)
     }
 

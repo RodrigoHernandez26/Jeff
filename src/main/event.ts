@@ -2,11 +2,14 @@ import { GuildServices, MessageServices, VoiceServices } from "@/infra/bot/servi
 import { Exchange } from "@/presentation/protocols/exchange";
 import { Client, Guild, Interaction, Message, VoiceState } from "discord.js";
 import { BOT } from "./config/env";
-import App from "./main";
+import { DefaultExchange } from "@/presentation/protocols/default-exchange";
+import { Producer } from "@/main/routes/producer";
+import { RouteService } from "@/main/routes/route-service";
 
 export class EventHandler {
 
     client: Client
+    private producer: Producer = new Producer()
 
     constructor(
         client: Client,
@@ -35,9 +38,12 @@ export class EventHandler {
 
         args.shift()
 
-        const exchange: Exchange = new Exchange(message, { args })
+        const exchange: Exchange = new DefaultExchange(RouteService.getInstance())
+        exchange.setMessage(message, args)
+        exchange.setProperty("args", args)
+
         try {
-            App.routeService.execute(command, exchange)
+            this.producer.produce(command, exchange)
         } catch (error: any) {
             switch(error.message) {
                 case 'ROUTE_NOT_FOUND':
@@ -51,17 +57,17 @@ export class EventHandler {
     onInteraction(interaction: Interaction): void {
         if (interaction.isCommand()) {
 
-            const exchange: Exchange = new Exchange(interaction, {})
-            try {
-                App.routeService.execute(interaction.commandName, exchange)
-            } catch (error: any) {
-                switch(error.message) {
-                    case 'ROUTE_NOT_FOUND':
-                        console.log('check misspeleted command'); break;
-                    default:
-                        console.log('default error message'); break;
-                }
-            }
+            // const exchange: Exchange = new Exchange(interaction, {})
+            // try {
+            //     App.routeService.execute(interaction.commandName, exchange)
+            // } catch (error: any) {
+            //     switch(error.message) {
+            //         case 'ROUTE_NOT_FOUND':
+            //             console.log('check misspeleted command'); break;
+            //         default:
+            //             console.log('default error message'); break;
+            //     }
+            // }
         }
 
     }

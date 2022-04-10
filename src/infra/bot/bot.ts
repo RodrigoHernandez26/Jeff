@@ -2,8 +2,8 @@ import { GetBotPingRepository } from "@/data/protocols/bot/get-ping";
 import { Client, Intents } from "discord.js";
 import { StartCallbackFunction } from "./protocols";
 // import { Event } from "../event/event";
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
+// const { REST } = require('@discordjs/rest');
+// const { Routes } = require('discord-api-types/v9');
 // import * as commands from '../commands'
 
 export default class Bot implements GetBotPingRepository {

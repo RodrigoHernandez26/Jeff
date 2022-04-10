@@ -1,11 +1,10 @@
 import Yallist from "yallist";
-import App from "../main";
 import { Processor } from "../../presentation/protocols/processor";
 import { RouteService } from "./route-service";
 
 export abstract class RouteBuilder { 
 
-    private routeService: RouteService = App.routeService
+    private routeService: RouteService = RouteService.getInstance()
     private _steps: Yallist<Processor> = new Yallist()
     
     public abstract configure(): void
