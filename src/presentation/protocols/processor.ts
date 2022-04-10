@@ -7,7 +7,7 @@ export type Options = {
 
 export interface Processor { 
     readonly proprieties: Processor.Properties | undefined;
-    process(exchange: Exchange): void 
+    process(exchange: Exchange): Promise<void>
 }
 
 export namespace Processor {
