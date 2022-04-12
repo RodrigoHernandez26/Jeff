@@ -13,6 +13,7 @@ export class RouteService {
     public static getInstance(): RouteService {
         if (!RouteService.instance) {
             RouteService.instance = new RouteService()
+            RouteService.instance.init()
         }
         return RouteService.instance
     }
@@ -20,6 +21,14 @@ export class RouteService {
     private init(): void{
         this.routesIndex.map(route => new route().configure())
         console.log(`Routes started: ${Array.from(this._routes.keys())}`)
+    }
+
+    public static start(): void {
+        RouteService.instance.init()
+    }
+
+    public get routes(): Map<string, RouteBuilder> {
+        return this._routes
     }
 
     public static start(): void {
@@ -52,7 +61,7 @@ export class RouteService {
                 continue
             }
             await step.process(exchange)
-
+          
         }
         return routeBuilder
     }
