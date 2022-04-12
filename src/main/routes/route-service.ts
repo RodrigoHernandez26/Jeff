@@ -1,6 +1,7 @@
 import { RouteBuilder } from "./route-builder";
 import * as routesIndex from './'
 import { Exchange } from "@/presentation/protocols/exchange";
+import { Processor } from "@/presentation/protocols/processor";
 
 export class RouteService {
     private static instance: RouteService
@@ -12,13 +13,13 @@ export class RouteService {
     public static getInstance(): RouteService {
         if (!RouteService.instance) {
             RouteService.instance = new RouteService()
-            RouteService.instance.init()
         }
         return RouteService.instance
     }
 
     private init(): void{
         this.routesIndex.map(route => new route().configure())
+        console.log(`Routes started: ${Array.from(this._routes.keys())}`)
     }
 
     public static start(): void {
@@ -45,7 +46,13 @@ export class RouteService {
         const routeBuilder: RouteBuilder = this.getRoute(route)
         for (let i = 0; i < routeBuilder.steps.length; i++) {
             if (exchange.isInterrupted) break
-            await routeBuilder.steps.get(i)!.process(exchange)
+            const step: Processor | RouteBuilder = routeBuilder.steps.get(i)!
+            if (step instanceof RouteBuilder){
+                step.configure()
+                continue
+            }
+            await step.process(exchange)
+
         }
         return routeBuilder
     }

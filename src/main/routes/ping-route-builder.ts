@@ -13,6 +13,7 @@ export class PingRouteBuilder extends RouteBuilder {
             .process(makeVerifyTextChannelPermissionsMiddleware())
             .process(makeBlockDmMessagesMiddleware())
             .process(this.processor)
+
     }
 
 }
