@@ -1,30 +1,25 @@
 import { RouteBuilder } from "./route-builder";
-import * as routesIndex from './'
 import { Exchange } from "@/presentation/protocols/exchange";
 import { Processor } from "@/presentation/protocols/processor";
 
 export class RouteService {
     private static instance: RouteService
-    private routesIndex = Object.values(routesIndex)
     private _routes: Map<string, RouteBuilder> = new Map();
 
-    private constructor() {
-    }
+    private constructor() {}
 
     public static getInstance(): RouteService {
-        if (!RouteService.instance) {
-            RouteService.instance = new RouteService()
-        }
+        if (!RouteService.instance) RouteService.instance = new RouteService()
         return RouteService.instance
     }
 
-    private init(): void {
-        this.routesIndex.map(route => new route().configure())
+    private initializeRoutes(routes: RouteBuilder[]): void {
+        routes.forEach(route => route.start())
         console.log(`Routes started: ${Array.from(this._routes.keys())}`)
     }
 
-    public static start(): void {
-        RouteService.instance.init()
+    public static start(...routes: RouteBuilder[]): void {
+        RouteService.getInstance().initializeRoutes(routes)
     }
 
     public get routes(): Map<string, RouteBuilder> {
@@ -39,7 +34,7 @@ export class RouteService {
 
     public addRoute(route: string[] | string, routeBuilder: RouteBuilder): RouteBuilder {
         route = Array.isArray(route) ? route : [route]
-        route.map(r => this._routes.set(r, routeBuilder))
+        route.forEach(r => this._routes.set(r, routeBuilder))
         return routeBuilder
     }
 

@@ -5,6 +5,7 @@ import { GuildServices, MessageServices, VoiceServices } from "@/infra/bot/servi
 import { Client } from "discord.js";
 import { RouteService } from "./routes/route-service";
 import { default as server } from "./server";
+import * as routesIndex from '@/main/routes/index';
 
 export default class App {
 
@@ -17,7 +18,8 @@ export default class App {
             new GuildServices(client),
             new VoiceServices(client)
         );
-        RouteService.start()
+
+        RouteService.start(...Object.values(routesIndex).map(route => new route()))
 
         server()
     })
