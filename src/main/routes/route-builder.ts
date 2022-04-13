@@ -4,8 +4,8 @@ import { RouteService } from "./route-service";
 
 export abstract class RouteBuilder {
 
-    private routeService: RouteService = RouteService.getInstance()
-    private _steps: Yallist<Processor | RouteBuilder> = new Yallist()
+    private readonly routeService: RouteService = RouteService.getInstance()
+    private readonly _steps: Yallist<Processor | RouteBuilder> = new Yallist()
 
     public abstract configure(): void
 
