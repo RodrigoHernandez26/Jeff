@@ -33,7 +33,7 @@ export class EventHandler {
 
         const args: Array<string> = message.content.split(" ")
 
-        const command: string = args[0].split(BOT.PREFIX)[1].toLowerCase()
+        const command: string = args[0].split(BOT.PREFIX)[1]
         if (!command) return
 
         args.shift()
@@ -43,7 +43,7 @@ export class EventHandler {
         exchange.setProperty("args", args)
 
         try {
-            this.producer.produce(command, exchange)
+            this.producer.produce(command.toLowerCase(), exchange)
         } catch (error: any) {
             switch(error.message) {
                 case 'ROUTE_NOT_FOUND':
